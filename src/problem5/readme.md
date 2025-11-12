@@ -45,13 +45,11 @@ simpleCRUD/
 
 Default configuration values are loaded from `/src/common/constants/ENV.ts`.
 
-+------------------------------------------------------------------+
 |  Variable |    Default   |               Description             |
 |-----------|--------------|---------------------------------------|
 | `PORT`    | `3000`       | Port the Express server listens on    |
 | `NODE_ENV`| `development`| Environment mode                      |
 | `DB_PATH` | `data.sqlite`| SQLite file for storage               |
-+------------------------------------------------------------------+
 
 To override, create `.env.development`:
 
@@ -143,7 +141,6 @@ Example API Response (GET /api/items)
 
 ## API Endpoints
 
-+----------------------------------------------------------------------------------------------------------------+
 | Method  |      Endpoint    |                                       Description                                 |
 |---------|------------------|-----------------------------------------------------------------------------------|
 | `POST`  | `/api/items`     | Create a new item                                                                 |
@@ -151,7 +148,6 @@ Example API Response (GET /api/items)
 | `GET`   | `/api/items/:id` | Retrieve one item by ID                                                           |
 | `PATCH` | `/api/items/:id` | Update item name or description                                                   |
 | `DELETE`| `/api/items/:id` | Delete an item                                                                    |
-+----------------------------------------------------------------------------------------------------------------+
 
 **Example payloads:**
 
@@ -204,7 +200,6 @@ Below is a simplified diagram of how data flows through the application.
 
 ## Development Commands
 
-+----------------------------------------------------------------+
 |         Command      |                    Description          |
 |----------------------|-----------------------------------------|
 | `npm run dev`        | Run with hot reload (ts-node + nodemon) |
@@ -212,7 +207,6 @@ Below is a simplified diagram of how data flows through the application.
 | `npm start`          | Run compiled app (production)           |
 | `npm run lint`       | Lint source files                       |
 | `npm run type-check` | TypeScript validation only              |
-+----------------------------------------------------------------+
 
 ---
 
