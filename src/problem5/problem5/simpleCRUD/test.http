@@ -1,0 +1,28 @@
+### Health
+GET http://localhost:3000/
+
+### Create
+POST http://localhost:3000/api/items
+Content-Type: application/json
+
+{
+  "name": "Sample",
+  "description": "Hello"
+}
+
+### List
+GET http://localhost:3000/api/items?search=sa&limit=5&offset=0&sort=createdAt&order=desc
+
+### Get
+GET http://localhost:3000/api/items/1
+
+### Update
+PATCH http://localhost:3000/api/items/1
+Content-Type: application/json
+
+{
+  "description": "Updated desc"
+}
+
+### Delete
+DELETE http://localhost:3000/api/items/1
