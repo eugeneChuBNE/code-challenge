@@ -131,40 +131,251 @@ The system consists of the following components:
 
 ---
 
+
+# API Endpoints Specification
+
 ## 6. API Endpoints
 
-### POST `/scores/events`
+### 6.1 Common Conventions
 
-**Request Body:**
+- Base path: `/api/v1`
+- All requests and responses use `Content-Type: application/json`.
+- Authentication uses:
+
+```
+Authorization: Bearer <jwt-token>
+```
+
+Generic error shape:
+
 ```json
 {
-  "action_type": "string",
-  "idempotency_key": "uuid-string"
+  "error": {
+    "code": "string",
+    "message": "Human readable description"
+  }
 }
 ```
 
-**Backend responsibilities:**
-- Validate JWT  
-- Map action_type → points  
-- Check idempotency  
-- Insert event  
-- Update score  
-- Update Redis leaderboard  
-- Publish events  
+---
+
+### 6.2 POST `/scores/events`
+
+Records a new scoring action for the authenticated user.
+
+#### Request
+
+**Method:** POST  
+**Path:** `/api/v1/scores/events`  
+**Headers:**
+
+```
+Authorization: Bearer <jwt-token>
+Content-Type: application/json
+Idempotency-Key: <uuid-optional>
+```
+
+**Body:**
+
+```json
+{
+  "action_type": "TASK_COMPLETED"
+}
+```
+
+#### Successful Response (201 Created)
+
+```json
+{
+  "user_id": "12345",
+  "action_type": "TASK_COMPLETED",
+  "awarded_points": 10,
+  "new_score": 150,
+  "processed_at": "2025-11-13T05:21:34Z"
+}
+```
+
+#### Idempotent Replay (200 OK)
+
+```json
+{
+  "user_id": "12345",
+  "action_type": "TASK_COMPLETED",
+  "awarded_points": 10,
+  "new_score": 150,
+  "processed_at": "2025-11-13T05:21:34Z",
+  "idempotent": true
+}
+```
+
+#### Errors
+
+**400 Bad Request**
+
+```json
+{
+  "error": {
+    "code": "INVALID_ACTION_TYPE",
+    "message": "action_type 'FOO_BAR' is not supported."
+  }
+}
+```
+
+**401 Unauthorized**
+
+```json
+{
+  "error": {
+    "code": "UNAUTHENTICATED",
+    "message": "Invalid or missing authentication token."
+  }
+}
+```
+
+**409 Conflict**
+
+```json
+{
+  "error": {
+    "code": "IDEMPOTENCY_CONFLICT",
+    "message": "Idempotency key already used for a different request."
+  }
+}
+```
 
 ---
 
-### GET `/leaderboard`
+### 6.3 GET `/leaderboard`
 
-Returns top N users.
+Fetches the global leaderboard.
+
+#### Query Parameters
+
+| Param | Type | Default | Description |
+|-------|-------|----------|-------------|
+| `limit` | integer | 10 | How many records to return |
+| `offset` | integer | 0 | Pagination offset |
+| `scope` | string | global | Optional leaderboard scope |
+
+**Example:**  
+`GET /api/v1/leaderboard?limit=10&offset=0`
+
+#### Response (200 OK)
+
+```json
+{
+  "limit": 10,
+  "offset": 0,
+  "items": [
+    {
+      "rank": 1,
+      "user_id": "42",
+      "display_name": "alice",
+      "score": 320
+    }
+  ],
+  "generated_at": "2025-11-13T05:30:00Z"
+}
+```
 
 ---
 
-### WebSocket `/ws/leaderboard`
+### 6.4 GET `/leaderboard/me`
 
-Pushes real-time leaderboard updates.
+Returns the requester’s score and ranking.
+
+#### Response (200 OK)
+
+If user has scored:
+
+```json
+{
+  "user_id": "12345",
+  "display_name": "charlie",
+  "score": 120,
+  "rank": 57,
+  "around_me": [
+    { "rank": 56, "user_id": "111", "score": 121 },
+    { "rank": 57, "user_id": "12345", "score": 120 },
+    { "rank": 58, "user_id": "222", "score": 118 }
+  ]
+}
+```
+
+If user has never scored:
+
+```json
+{
+  "user_id": "12345",
+  "display_name": "charlie",
+  "score": 0,
+  "rank": null,
+  "around_me": []
+}
+```
 
 ---
+
+### 6.5 WebSocket `/ws/leaderboard`
+
+Provides a live leaderboard update stream.
+
+#### Initial Snapshot Message
+
+```json
+{
+  "type": "snapshot",
+  "limit": 10,
+  "items": [
+    {
+      "rank": 1,
+      "user_id": "42",
+      "display_name": "alice",
+      "score": 330
+    }
+  ],
+  "generated_at": "2025-11-13T05:31:10Z"
+}
+```
+
+#### Incremental Update Message
+
+```json
+{
+  "type": "update",
+  "items": [
+    {
+      "rank": 1,
+      "user_id": "42",
+      "display_name": "alice",
+      "score": 340
+    }
+  ],
+  "generated_at": "2025-11-13T05:31:20Z"
+}
+```
+
+#### Ping / Keepalive
+
+```json
+{
+  "type": "ping",
+  "timestamp": "2025-11-13T05:32:00Z"
+}
+```
+
+#### WebSocket Error Message
+
+```json
+{
+  "type": "error",
+  "error": {
+    "code": "UNAUTHENTICATED",
+    "message": "Authentication token expired."
+  }
+}
+```
+
 
 ## 7. Execution Flow Summary
 
