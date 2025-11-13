@@ -1,0 +1,70 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.8 Chrome/140.0.7339.240 Electron/38.4.0 Safari/537.36" version="28.2.8">
+  <diagram id="Component Architecture - Scoreboard-id" name="Component Architecture - Scoreboard">
+    <mxGraphModel dx="1837" dy="1069" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Component Architecture - Scoreboard" style="text;whiteSpace=wrap;html=1;fontStyle=1;fontSize=38;" parent="1" vertex="1">
+          <mxGeometry x="42" y="35" width="737" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c_user" value="User Browser&amp;nbsp;&lt;div&gt;(Scoreboard UI)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontStyle=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="43" y="248" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c_frontend" value="Frontend Web App&amp;nbsp;&lt;div&gt;(SPA / Web UI)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontStyle=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="393" y="243" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c_api" value="API Service&amp;nbsp;&lt;div&gt;(Scoreboard Module)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontStyle=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="850" y="243" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c_auth" value="Auth Layer&amp;nbsp;&lt;div&gt;(JWT / Session)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontStyle=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="870" y="433" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c_score" value="Score Service&lt;div&gt;(score_events, user_scores)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontStyle=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="1182" y="148" width="259" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c_leader" value="Leaderboard Service&lt;div&gt;(top N lookup, cache mgmt)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontStyle=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="1182" y="343" width="259" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c_db" value="Database&amp;nbsp;&lt;div&gt;(user_scores, score_events)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontStyle=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="1570" y="248" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c_redis" value="Redis Cache / PubSub&amp;nbsp;&lt;div&gt;(leaderboard sorted set)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontStyle=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="1183" y="523" width="260" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="ce1" value="HTTP + WebSocket" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000" parent="1" source="c_user" target="c_frontend" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ce2" value="API calls/leaderboard/&lt;div&gt;scores/events&lt;/div&gt;" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000" parent="1" source="c_frontend" target="c_api" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ce3" value="Validate token" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000" parent="1" source="c_api" target="c_auth" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ce4" value="Score updates" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000" parent="1" source="c_api" target="c_score" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ce5" value="Read leaderboard + manage cache" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000" parent="1" edge="1">
+          <mxGeometry x="-0.2862" relative="1" as="geometry">
+            <mxPoint x="1090" y="288.0000000000002" as="sourcePoint" />
+            <mxPoint x="1346" y="343" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce6" value="Persist scores/events" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1440" y="193.00000000000023" as="sourcePoint" />
+            <mxPoint x="1679" y="248" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce7" value="Load leaderboard snapshot" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000" parent="1" source="c_leader" target="c_db" edge="1">
+          <mxGeometry x="-0.1073" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ce8" value="Top N cache,&amp;nbsp;&lt;div&gt;pub/sub events&lt;/div&gt;" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000" parent="1" source="c_leader" target="c_redis" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

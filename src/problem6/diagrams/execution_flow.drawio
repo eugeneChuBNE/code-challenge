@@ -1,0 +1,58 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.8 Chrome/140.0.7339.240 Electron/38.4.0 Safari/537.36" version="28.2.8">
+  <diagram id="Flow Execution - Score Update Pipeline-id" name="Flow Execution - Score Update Pipeline">
+    <mxGraphModel dx="2204" dy="1283" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Flow Execution - Score Update Pipeline" style="text;whiteSpace=wrap;html=1;fontStyle=1;fontSize=38;" parent="1" vertex="1">
+          <mxGeometry x="39" y="38" width="860" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="f_action" value="User completes action&amp;nbsp;&lt;div&gt;(e.g., task done)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="80" y="120" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="f_fe" value="Frontend App prepare&amp;nbsp;&lt;div&gt;POST /scores/events&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="400" y="120" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="f_api" value="API Service validate auth + action_type resolve points" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="720" y="120" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="f_db" value="DB: INSERT score_events + UPDATE user_scores" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="1040" y="120" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="f_cache" value="Redis: update leaderboard&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="720" y="240" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="f_pub" value="Publish leaderboard_updated event to subscribers" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="400" y="240" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="f_ws" value="WebSocket connections&amp;nbsp;&lt;div&gt;receive update&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="80" y="240" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="f_ui" value="UI re-renders updated&amp;nbsp;&lt;div&gt;top 10 leaderboard&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="80" y="360" width="280" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fe1" value="1" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;fontSize=14;" parent="1" source="f_action" target="f_fe" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fe2" value="2" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;fontSize=14;" parent="1" source="f_fe" target="f_api" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fe3" value="3" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;fontSize=14;" parent="1" source="f_api" target="f_db" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fe4" value="4" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;fontSize=14;" parent="1" source="f_api" target="f_cache" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fe5" value="5" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;fontSize=14;" parent="1" source="f_cache" target="f_pub" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fe6" value="6" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;fontSize=14;" parent="1" source="f_pub" target="f_ws" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fe7" value="7" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;fontSize=14;" parent="1" source="f_ws" target="f_ui" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

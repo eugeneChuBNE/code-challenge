@@ -1,0 +1,97 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.8 Chrome/140.0.7339.240 Electron/38.4.0 Safari/537.36" version="28.2.8">
+  <diagram id="Sequence - Score Update Flow-id" name="Sequence - Score Update Flow">
+    <mxGraphModel dx="1348" dy="1274" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Sequence - Score Update Flow" style="text;whiteSpace=wrap;html=1;fontStyle=1;fontSize=38;" parent="1" vertex="1">
+          <mxGeometry x="40" y="40" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="u" value="User Browser" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="40" y="140" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fe" value="Frontend App" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="380" y="140" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oTP_yST3X__SJTpSJt-B-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="1" source="api" target="redis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oTP_yST3X__SJTpSJt-B-22" value="5. ZINCRBY leaderboard&amp;nbsp;&lt;div&gt;&amp;lt;userId&amp;gt; &amp;lt;points&amp;gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="oTP_yST3X__SJTpSJt-B-20">
+          <mxGeometry x="-0.2485" y="-1" relative="1" as="geometry">
+            <mxPoint x="1" y="22" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oTP_yST3X__SJTpSJt-B-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="1" source="api" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oTP_yST3X__SJTpSJt-B-30" value="4. Insert into score_events&amp;nbsp;&lt;div&gt;+ update user_scores&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="oTP_yST3X__SJTpSJt-B-29">
+          <mxGeometry x="0.2903" relative="1" as="geometry">
+            <mxPoint y="88" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oTP_yST3X__SJTpSJt-B-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontSize=14;" edge="1" parent="1" source="api" target="ws">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oTP_yST3X__SJTpSJt-B-32" value="7. Push WebSocket&amp;nbsp;&lt;div&gt;snapshot/update&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="oTP_yST3X__SJTpSJt-B-31">
+          <mxGeometry x="0.5714" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="api" value="&lt;b&gt;API Service&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="640" y="280" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="db" value="Score &amp;amp; Events DB" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="300" y="500" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oTP_yST3X__SJTpSJt-B-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="1" source="redis" target="api">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1080" y="530" />
+              <mxPoint x="1080" y="400" />
+              <mxPoint x="830" y="400" />
+              <mxPoint x="830" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oTP_yST3X__SJTpSJt-B-28" value="6. Publish leaderboard_updated" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="oTP_yST3X__SJTpSJt-B-24">
+          <mxGeometry x="0.1837" y="-2" relative="1" as="geometry">
+            <mxPoint x="-4" y="2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="redis" value="Leaderboard Cache (Redis)" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="800" y="500" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ws" value="WebSocket Clients (Scoreboard viewers)" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="880" y="140" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="1. Completes action" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;fontSize=14;" parent="1" source="u" target="fe" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="2. POST /scores/events" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;fontSize=14;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="fe" target="api" edge="1">
+          <mxGeometry x="-0.4" relative="1" as="geometry">
+            <mxPoint x="600" y="90" as="sourcePoint" />
+            <mxPoint x="840" y="250" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oTP_yST3X__SJTpSJt-B-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;fontSize=14;" edge="1" parent="1" target="api">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="720" y="280" as="sourcePoint" />
+            <mxPoint x="700" y="370" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="720" y="240" />
+              <mxPoint x="460" y="240" />
+              <mxPoint x="460" y="380" />
+              <mxPoint x="710" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oTP_yST3X__SJTpSJt-B-18" value="3. Validate auth + compute points" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="oTP_yST3X__SJTpSJt-B-17">
+          <mxGeometry x="-0.2641" y="2" relative="1" as="geometry">
+            <mxPoint x="82" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

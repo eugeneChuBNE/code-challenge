@@ -1,0 +1,74 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.8 Chrome/140.0.7339.240 Electron/38.4.0 Safari/537.36" version="28.2.8">
+  <diagram id="Deployment - Scoreboard System-id" name="Deployment - Scoreboard System">
+    <mxGraphModel dx="2204" dy="1283" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="Deployment - Scoreboard System" style="text;whiteSpace=wrap;html=1;fontStyle=1;fontSize=38;" parent="1" vertex="1">
+          <mxGeometry x="39" y="56" width="791" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="d_user" value="User Browser" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="41" y="280" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="d_lb" value="HTTPS Load Balancer" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="301" y="280" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="d_api1" value="API Server #1&amp;nbsp;&lt;div&gt;(Scoreboard Module)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="581" y="160" width="230" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="d_api2" value="API Server #2&amp;nbsp;&lt;div&gt;(&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Scoreboard Module)&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="581" y="400" width="230" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="d_db" value="Database Cluster&amp;nbsp;&lt;div&gt;(Primary + Replica)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="1061" y="160" width="260" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="d_redis" value="Redis Cluster&amp;nbsp;&lt;div&gt;(Cache + Pub/Sub)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shape=rectangle;strokeColor=#000000;fillColor=#FFFFFF;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="1061" y="390" width="260" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="de1" value="HTTPS" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000" parent="1" source="d_user" target="d_lb" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="de2" value="HTTP / WebSocket" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;entryX=-0.004;entryY=0.411;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="d_lb" target="d_api1" edge="1">
+          <mxGeometry x="0.3163" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="de3" value="HTTP / WebSocket" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="d_lb" target="d_api2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="de4" value="Score + leaderboard reads/writes" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000" parent="1" source="d_api1" target="d_db" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="de5" value="Score + leaderboard reads/writes" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="d_api2" target="d_db" edge="1">
+          <mxGeometry x="-0.2522" relative="1" as="geometry">
+            <mxPoint x="611" y="355" as="sourcePoint" />
+            <mxPoint x="1051" y="180" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="696" y="320" />
+              <mxPoint x="1191" y="320" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="de6" value="Leaderboard cache + pub/sub" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="d_api1" target="d_redis" edge="1">
+          <mxGeometry x="-0.3675" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="686" y="270" />
+              <mxPoint x="981" y="270" />
+              <mxPoint x="981" y="340" />
+              <mxPoint x="1191" y="340" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="de7" value="Leaderboard cache + pub/sub" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#000000;entryX=0;entryY=0.556;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="d_redis" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="811" y="440" as="sourcePoint" />
+            <mxPoint x="1011" y="440" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
