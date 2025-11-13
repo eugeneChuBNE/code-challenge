@@ -144,7 +144,7 @@ Example API Response (GET /api/items)
 | Method  |      Endpoint    |                                       Description                                 |
 |---------|------------------|-----------------------------------------------------------------------------------|
 | `POST`  | `/api/items`     | Create a new item                                                                 |
-| `GET`   | `/api/items`     | List items (with optional filters: `search`, `limit`, `offset`, `sort`, `order`)  | -------> not done with the filter yet...
+| `GET`   | `/api/items`     | List items (with optional filters: `search`, `limit`, `offset`, `sort`, `order`)  | 
 | `GET`   | `/api/items/:id` | Retrieve one item by ID                                                           |
 | `PATCH` | `/api/items/:id` | Update item name or description                                                   |
 | `DELETE`| `/api/items/:id` | Delete an item                                                                    |
@@ -216,6 +216,3 @@ Below is a simplified diagram of how data flows through the application.
 - All items persist between runs unless the file is deleted.
 - To reset the database, simply rm `data.sqlite`.
 
-## (Still) notes (but for myself) - Eugeneeee, u forgot to add filters!!!
-
-This document will be updated along with the development of this prod :D

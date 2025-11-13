@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>Items</title>
+
+    <!-- Base styles from the template -->
     <link rel="stylesheet" type="text/css" href="/stylesheets/users.css" />
 
     <!-- Handlebars -->
@@ -23,95 +25,193 @@
   </head>
 
   <body>
-    <!-- Add Item -->
-    <div class="users-column add-user-col">
-      <div class="column-header">Add Item:</div>
-      <div>
-        <input
-          id="name-input"
-          type="text"
-          class="form-control"
-          placeholder="Name"
-        />
-      </div>
-      <div>
-        <input
-          id="desc-input"
-          type="text"
-          class="form-control"
-          placeholder="Description"
-        />
-      </div>
-      <div>
-        <button id="add-item-btn" class="btn btn-success">Add</button>
-      </div>
-    </div>
-
-    <!-- Display Items -->
-    <div class="users-column">
-      <div class="column-header">Items:</div>
-
-      <div id="all-items-anchor"></div>
-      <script id="all-items-template" type="text/x-handlebars-template">
-        {{#each items}}
-          <div class="item-display-ele">
-            <div class="normal-view">
-              <div><b>Name:</b> {{name}}</div>
-              <div><b>Description:</b> {{description}}</div>
-              <div><b>Created:</b> {{createdFormatted}}</div>
-              <button
-                type="button"
-                class="btn btn-primary edit-item-btn"
-                data-item-id="{{id}}"
-              >
-                Edit
-              </button>
-              <button
-                class="btn btn-danger delete-item-btn"
-                data-item-id="{{id}}"
-              >
-                Delete
-              </button>
+    <div class="container-fluid" style="padding: 24px;">
+      <div class="row">
+        <!-- Add Item -->
+        <div class="col-md-4">
+          <div class="users-column add-user-col">
+            <div class="column-header">Add Item:</div>
+            <div>
+              <input
+                id="name-input"
+                type="text"
+                class="form-control"
+                placeholder="Name"
+              />
             </div>
-
-            <div class="edit-view" style="display:none;">
-              <div>
-                Name:&nbsp;
-                <input
-                  type="text"
-                  class="form-control name-edit-input"
-                  value="{{name}}"
-                />
-              </div>
-              <div class="desc-edit">
-                Description:&nbsp;
-                <input
-                  type="text"
-                  class="form-control desc-edit-input"
-                  value="{{description}}"
-                />
-              </div>
-              <button
-                class="btn btn-primary submit-edit-btn"
-                data-item-id="{{id}}"
-                data-item-created="{{createdAt}}"
-              >
-                Submit
-              </button>
-              <button
-                class="btn btn-secondary cancel-edit-btn"
-                data-item-id="{{id}}"
-              >
-                Cancel
+            <div>
+              <input
+                id="desc-input"
+                type="text"
+                class="form-control"
+                placeholder="Description"
+              />
+            </div>
+            <div>
+              <button id="add-item-btn" class="btn btn-success">
+                Add
               </button>
             </div>
           </div>
-        {{/each}}
-      </script>
+        </div>
+
+        <!-- Display / Filters / Pagination -->
+        <div class="col-md-8">
+          <div class="users-column">
+            <div class="column-header">Items:</div>
+
+            <!-- Filters -->
+            <div
+              class="mb-4 p-3"
+              style="
+                background-color: #f4f8ff;
+                border-radius: 8px;
+                border: 1px solid #e1ebff;
+              "
+            >
+              <!-- Row 1: Search + Sort -->
+              <div class="row g-2 align-items-end mb-2">
+                <div class="col-sm-8">
+                  <label for="search-input" class="form-label mb-1">Search</label>
+                  <input
+                    id="search-input"
+                    type="text"
+                    class="form-control"
+                    placeholder="Search name or description"
+                  />
+                </div>
+
+                <div class="col-sm-4">
+                  <label for="sort-select" class="form-label mb-1">Sort By</label>
+                  <select id="sort-select" class="form-select">
+                    <option value="createdAt">Created</option>
+                    <option value="updatedAt">Updated</option>
+                    <option value="name">Name</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Row 2: Order + Page Size + Apply -->
+              <div class="row g-2 align-items-end">
+                <div class="col-sm-4">
+                  <label for="order-select" class="form-label mb-1">Order</label>
+                  <select id="order-select" class="form-select">
+                    <option value="desc">Desc</option>
+                    <option value="asc">Asc</option>
+                  </select>
+                </div>
+
+                <div class="col-sm-4">
+                  <label for="limit-select" class="form-label mb-1">Page Size</label>
+                  <select id="limit-select" class="form-select">
+                    <option>5</option>
+                    <option selected>10</option>
+                    <option>20</option>
+                    <option>50</option>
+                    <option>100</option>
+                  </select>
+                </div>
+
+                <div class="col-sm-4">
+                  <button id="apply-filters" class="btn btn-primary w-100">
+                    Apply
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pagination summary -->
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                Total:
+                <span id="total-count">0</span>
+              </div>
+              <div>
+                <button
+                  id="prev-page"
+                  class="btn btn-outline-secondary btn-sm"
+                >
+                  Prev
+                </button>
+                <span class="mx-2">
+                  Page
+                  <span id="page-index">1</span>/<span id="page-total">1</span>
+                </span>
+                <button
+                  id="next-page"
+                  class="btn btn-outline-secondary btn-sm"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+
+            <!-- List -->
+            <div id="all-items-anchor"></div>
+            <script
+              id="all-items-template"
+              type="text/x-handlebars-template"
+            >
+              {{#each items}}
+                <div class="item-display-ele">
+                  <div class="normal-view">
+                    <div><b>Name:</b> {{name}}</div>
+                    <div><b>Description:</b> {{description}}</div>
+                    <div><b>Created:</b> {{createdFormatted}}</div>
+                    <button
+                      type="button"
+                      class="btn btn-primary edit-item-btn"
+                      data-item-id="{{id}}"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      class="btn btn-danger delete-item-btn"
+                      data-item-id="{{id}}"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                  <div class="edit-view" style="display:none;">
+                    <div>
+                      Name:&nbsp;
+                      <input
+                        type="text"
+                        class="form-control name-edit-input"
+                        value="{{name}}"
+                      />
+                    </div>
+                    <div class="desc-edit">
+                      Description:&nbsp;
+                      <input
+                        type="text"
+                        class="form-control desc-edit-input"
+                        value="{{description}}"
+                      />
+                    </div>
+                    <button
+                      class="btn btn-primary submit-edit-btn"
+                      data-item-id="{{id}}"
+                      data-item-created="{{createdAt}}"
+                    >
+                      Submit
+                    </button>
+                    <button
+                      class="btn btn-secondary cancel-edit-btn"
+                      data-item-id="{{id}}"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              {{/each}}
+            </script>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- JS -->
-    <script src="/scripts/http.js"></script>
     <script src="/scripts/items.js"></script>
   </body>
 </html>
